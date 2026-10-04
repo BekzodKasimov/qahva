@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#17120f">
+  <meta name="description" content="Qahva Xona — Toshkentdagi hunarmand qahvaxonasi. Har kuni 08:00 dan 01:00 gacha, Karasuv-20.">
+  <title>Qahva Xona — Toshkentda qahva va sokin lahzalar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --espresso: #17120f;
+      --espresso-soft: #201813;
+      --panel: #241c16;
+      --caramel: #c68b59;
+      --gold: #dfb47e;
+      --cream: #f7f3e9;
+      --muted: #b1a69b;
+      --line: rgba(247, 243, 233, .13);
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", Arial, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+    body {
+      margin: 0;
+      background: var(--espresso);
+      color: var(--cream);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .wrap { width: min(1180px, calc(100% - 48px)); margin: 0 auto; }
+
+    .site-header {
+      position: fixed;
+      inset: 0 0 auto;
+      z-index: 5;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+      background: rgba(23,18,15,.94);
+      backdrop-filter: blur(12px);
+    }
+    .header-inner {
+      min-height: 82px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 12px; flex-shrink: 0; }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(223,180,126,.7);
+      border-radius: 50%;
+      color: var(--gold);
+      font-family: var(--serif);
+      font-size: 20px;
+    }
+    .brand-name { font-family: var(--serif); font-size: 21px; letter-spacing: .02em; }
+    .header-right { display: flex; align-items: center; gap: 34px; }
+    .main-nav { display: flex; gap: 30px; color: rgba(247,243,233,.82); font-size: 12px; letter-spacing: .08em; }
+    .main-nav a, .social-link { transition: color .2s ease; }
+    .main-nav a:hover, .social-link:hover { color: var(--gold); }
+    .language-toggle {
+      border: 1px solid rgba(223,180,126,.55);
+      border-radius: 3px;
+      background: rgba(23,18,15,.28);
+      color: var(--cream);
+      padding: 10px 13px;
+      cursor: pointer;
+      font-size: 11px;
+      letter-spacing: .07em;
+      transition: background .2s, border-color .2s;
+    }
+    .language-toggle:hover { background: rgba(198,139,89,.16); border-color: var(--gold); }
+
+    .hero {
+      min-height: 690px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background:
+        linear-gradient(90deg, rgba(18,14,11,.91) 0%, rgba(18,14,11,.72) 48%, rgba(18,14,11,.22) 100%),
+        linear-gradient(0deg, rgba(18,14,11,.35), transparent 48%),
+        url("https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=2200&q=85") center 53% / cover;
+    }
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: 10%;
+      top: 17%;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      background: rgba(198,139,89,.13);
+      filter: blur(90px);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 1; padding-top: 72px; max-width: 700px; }
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 22px;
+      color: var(--gold);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: ""; width: 30px; height: 1px; background: var(--caramel); }
+    h1, h2, h3, p { margin-top: 0; }
+    .hero h1 {
+      max-width: 660px;
+      margin-bottom: 20px;
+      font: 400 clamp(46px, 7.4vw, 82px)/1.07 var(--serif);
+      letter-spacing: -.035em;
+    }
+    .hero h1 em { color: var(--gold); font-weight: 400; }
+    .hero-copy { max-width: 430px; color: rgba(247,243,233,.72); font-size: 14px; line-height: 1.8; }
+    .hero-actions { display: flex; align-items: center; gap: 24px; margin-top: 34px; }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      background: var(--caramel);
+      color: #1b120d;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      transition: background .2s, transform .2s;
+    }
+    .button:hover { background: var(--gold); transform: translateY(-2px); }
+    .hero-hours { color: rgba(247,243,233,.75); font-size: 11px; letter-spacing: .06em; }
+    .hero-hours strong { display: block; margin-top: 5px; color: var(--cream); font-size: 13px; font-weight: 500; }
+    .hero-note {
+      position: absolute;
+      right: max(24px, calc((100vw - 1180px)/2));
+      bottom: 54px;
+      z-index: 1;
+      color: rgba(247,243,233,.68);
+      font-family: var(--serif);
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .intro { padding: 76px 0 72px; text-align: center; }
+    .intro .eyebrow { justify-content: center; }
+    .intro h2, .section-title {
+      margin-bottom: 15px;
+      font: 400 clamp(34px, 4.5vw, 49px)/1.15 var(--serif);
+      letter-spacing: -.02em;
+    }
+    .intro-copy { max-width: 540px; margin: auto; color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .ornament { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 24px auto 0; color: var(--caramel); }
+    .ornament::before, .ornament::after { content: ""; width: 38px; height: 1px; background: rgba(198,139,89,.48); }
+    .ornament span { font-size: 12px; }
+
+    .menu-section { padding: 76px 0 90px; background: #f4efe5; color: #241a14; }
+    .menu-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 35px; }
+    .menu-heading .eyebrow { margin-bottom: 13px; color: #9a6239; }
+    .menu-heading .section-title { margin-bottom: 0; }
+    .menu-subtitle { margin: 0 0 5px; color: #796d61; font-size: 12px; }
+    .menu-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .menu-card {
+      padding: 28px 30px 25px;
+      border: 1px solid rgba(79,56,38,.13);
+      background: rgba(255,255,255,.44);
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .menu-card:hover { transform: translateY(-3px); border-color: rgba(154,98,57,.5); box-shadow: 0 14px 35px rgba(44,31,20,.06); }
+    .menu-card-head { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding-bottom: 17px; border-bottom: 1px solid rgba(79,56,38,.15); }
+    .menu-card h3 { margin: 0; font: 500 23px/1.2 var(--serif); }
+    .category-number { color: #a77751; font: 400 13px var(--serif); }
+    .menu-items { list-style: none; padding: 5px 0 0; margin: 0; }
+    .menu-items li { display: flex; justify-content: space-between; gap: 18px; padding: 12px 0; border-bottom: 1px solid rgba(79,56,38,.09); font-size: 12px; line-height: 1.45; }
+    .menu-items li:last-child { border-bottom: 0; padding-bottom: 2px; }
+    .item-name { color: #44382e; }
+    .item-price { color: #8a5632; font-weight: 700; text-align: right; white-space: nowrap; }
+    .menu-note { margin: 20px 0 0; color: #887b6e; font-size: 10px; text-align: right; }
+
+    .visit-section { position: relative; overflow: hidden; padding: 86px 0; }
+    .visit-section::before {
+      content: "";
+      position: absolute;
+      width: 440px;
+      height: 440px;
+      right: -160px;
+      top: -200px;
+      border-radius: 50%;
+      background: rgba(198,139,89,.09);
+      filter: blur(70px);
+    }
+    .visit-grid { position: relative; display: grid; grid-template-columns: 1fr 1fr; gap: 75px; align-items: center; }
+    .visit-section .eyebrow { margin-bottom: 15px; }
+    .visit-section .section-title { margin-bottom: 20px; }
+    .visit-copy { max-width: 430px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.8; }
+    .visit-details { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-top: 28px; margin-top: 28px; border-top: 1px solid var(--line); }
+    .detail-label { display: block; margin-bottom: 9px; color: var(--caramel); font-size: 9px; font-weight: 700; letter-spacing: .17em; text-transform: uppercase; }
+    .detail-value { color: var(--cream); font: 400 16px/1.5 var(--serif); }
+    .map-column { display: grid; gap: 14px; }
+    .map-frame {
+      width: 100%;
+      min-height: 300px;
+      aspect-ratio: 4 / 3;
+      border: 1px solid rgba(223,180,126,.3);
+      background: var(--panel);
+    }
+    .map-frame iframe { display: block; width: 100%; height: 100%; min-height: 300px; border: 0; }
+    .map-directions { justify-self: start; }
+
+    .site-footer { padding: 27px 0; border-top: 1px solid var(--line); }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .footer-brand { display: flex; align-items: center; gap: 11px; }
+    .footer-brand .brand-mark { width: 31px; height: 31px; font-size: 16px; }
+    .footer-brand .brand-name { font-size: 17px; }
+    .footer-socials { display: flex; gap: 23px; color: rgba(247,243,233,.75); font-size: 11px; }
+    .footer-phone { color: var(--gold); font-size: 12px; }
+    .copyright { margin: 17px 0 0; color: #847970; font-size: 9px; text-align: center; }
+
+    @media (max-width: 760px) {
+      .wrap { width: min(100% - 36px, 560px); }
+      .site-header { position: absolute; background: transparent; backdrop-filter: none; }
+      .header-inner { min-height: 72px; gap: 12px; }
+      .header-right { gap: 15px; }
+      .main-nav { display: none; }
+      .brand-name { font-size: 19px; }
+      .hero { min-height: 650px; background-position: 58% center; }
+      .hero-content { padding-top: 65px; }
+      .hero h1 { font-size: clamp(48px, 12vw, 68px); }
+      .hero-note { right: 18px; bottom: 24px; font-size: 12px; }
+      .intro { padding: 62px 0; }
+      .menu-section { padding: 65px 0 70px; }
+      .menu-grid { grid-template-columns: 1fr; gap: 12px; }
+      .menu-heading { align-items: start; flex-direction: column; gap: 10px; margin-bottom: 25px; }
+      .menu-card { padding: 24px 21px 21px; }
+      .menu-card h3 { font-size: 21px; }
+      .visit-section { padding: 68px 0; }
+      .visit-grid { grid-template-columns: 1fr; gap: 34px; }
+      .map-frame, .map-frame iframe { min-height: 245px; }
+      .footer-inner { flex-wrap: wrap; justify-content: center; text-align: center; }
+      .footer-brand { width: 100%; justify-content: center; }
+      .footer-socials { gap: 17px; }
+    }
+    @media (max-width: 420px) {
+      .wrap { width: calc(100% - 30px); }
+      .brand { gap: 8px; }
+      .brand-name { font-size: 17px; }
+      .brand-mark { width: 33px; height: 33px; font-size: 17px; }
+      .language-toggle { padding: 9px 10px; font-size: 10px; }
+      .hero-actions { align-items: flex-start; flex-direction: column; gap: 17px; }
+      .visit-details { gap: 14px; }
+      .detail-value { font-size: 14px; }
+      .footer-socials { flex-wrap: wrap; justify-content: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="#home" aria-label="Qahva Xona — bosh sahifa">
+        <span class="brand-mark" aria-hidden="true">Q</span>
+        <span class="brand-name">Qahva Xona</span>
+      </a>
+      <div class="header-right">
+        <nav class="main-nav" aria-label="Asosiy navigatsiya">
+          <a href="#menu" data-i18n="navMenu">Menyu</a>
+          <a href="#about" data-i18n="navAbout">Biz haqimizda</a>
+          <a href="#visit" data-i18n="navVisit">Manzil</a>
+        </nav>
+        <button class="language-toggle" type="button" aria-label="Переключить язык на русский" aria-pressed="false">O'zbekcha <span aria-hidden="true">⌄</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="wrap hero-content">
+        <p class="eyebrow" data-i18n="heroEyebrow">Toshkent · Karasuv-20</p>
+        <h1 data-i18n-html="heroTitle">Toshkentdagi<br>eng yaxshi <em>qahva</em></h1>
+        <p class="hero-copy" data-i18n="heroCopy">Har bir finjonda mehr bilan tayyorlangan qahva, iliq muhit va shoshilmasdan yashalgan lahzalar.</p>
+        <div class="hero-actions">
+          <a class="button" href="#menu" data-i18n="heroCta">Menyuni ko'rish <span aria-hidden="true">&nbsp;↗</span></a>
+          <div class="hero-hours"><span data-i18n="heroOpen">Har kuni ochiq</span><strong>08:00 — 01:00</strong></div>
+        </div>
+      </div>
+      <span class="hero-note" data-i18n="heroNote">Shaharning o'rtasida, o'zingiz uchun bir lahza</span>
+    </section>
+
+    <section class="intro" id="about">
+      <div class="wrap">
+        <p class="eyebrow" data-i18n="introEyebrow">Qahva Xona bilan tanishing</p>
+        <h2 data-i18n-html="introTitle">Shoshilmang.<br><em>Qahvangiz sizni kutadi.</em></h2>
+        <p class="intro-copy" data-i18n="introCopy">Qahva Xona — har kuni qaytgingiz keladigan maskan. Yaxshi qahva, samimiy suhbat va o'zingizga ajratilgan sokin vaqt uchun.</p>
+        <div class="ornament" aria-hidden="true"><span>✳</span></div>
+      </div>
+    </section>
+
+    <section class="menu-section" id="menu">
+      <div class="wrap">
+        <div class="menu-heading">
+          <div>
+            <p class="eyebrow" data-i18n="menuEyebrow">Har bir kayfiyat uchun</p>
+            <h2 class="section-title" data-i18n="menuTitle">Bizning menyu</h2>
+          </div>
+          <p class="menu-subtitle" data-i18n="menuSubtitle">Yangi tayyorlanadi. Mehr bilan tortiladi.</p>
+        </div>
+        <div class="menu-grid" id="menuGrid" aria-live="polite"></div>
+        <p class="menu-note" data-i18n="priceNote">Barcha narxlar O'zbekiston so'mida (UZS)</p>
+      </div>
+    </section>
+
+    <section class="visit-section" id="visit">
+      <div class="wrap visit-grid">
+        <div>
+          <p class="eyebrow" data-i18n="visitEyebrow">Bizni toping</p>
+          <h2 class="section-title" data-i18n-html="visitTitle">Sizni kutamiz<br><em>har kuni.</em></h2>
+          <p class="visit-copy" data-i18n="visitCopy">Qahva uchun keling, yana qaytgingiz keladigan muhit uchun qoling. Do'stlaringizni ham olib keling.</p>
+          <div class="visit-details">
+            <div><span class="detail-label" data-i18n="addressLabel">Manzil</span><span class="detail-value" data-i18n-html="addressValue">Toshkent, Karasuv-20<br>Mo'ljal: Palace</span></div>
+            <div><span class="detail-label" data-i18n="hoursLabel">Ish vaqtimiz</span><span class="detail-value" data-i18n-html="hoursValue">Har kuni<br>08:00 — 01:00</span></div>
+          </div>
+        </div>
+        <div class="map-column">
+          <div class="map-frame">
+            <iframe
+              src="https://www.google.com/maps?q=Qahva%20Xona%2C%20Karasuv-20%2C%20Tashkent&output=embed"
+              title="Qahva Xona — Karasuv-20, Tashkent"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <a class="button map-directions" href="https://maps.app.goo.gl/NuJKJQWXdqoz3RMA8" target="_blank" rel="noopener noreferrer" data-i18n="mapButton">Kartada ochish <span aria-hidden="true">&nbsp;↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-inner">
+        <a class="footer-brand" href="#home">
+          <span class="brand-mark" aria-hidden="true">Q</span><span class="brand-name">Qahva Xona</span>
+        </a>
+        <div class="footer-socials">
+          <a class="social-link" href="https://t.me/Qahva_xonaa" target="_blank" rel="noopener noreferrer">Telegram ↗</a>
+          <a class="social-link" href="https://instagram.com/qahva_xona" target="_blank" rel="noopener noreferrer">Instagram ↗</a>
+        </div>
+        <a class="footer-phone" href="tel:+998946137900">+998 94 613 79 00</a>
+      </div>
+      <p class="copyright" data-i18n="copyright">© 2026 Qahva Xona. Mehr bilan, Toshkentda.</p>
+    </div>
+  </footer>
+
+  <script>
+    const menuData = {
+      uz: [
+        { title: "Issiq ichimliklar", items: [
+          ["Espresso", "20 000 UZS"],
+          ["Amerikano · 250 / 330 / 400 ml", "20 000 / 25 000 / 30 000 UZS"],
+          ["Kapuchino · 250 / 330 / 400 ml", "25 000 / 30 000 / 35 000 UZS"],
+          ["Lazzat / Flat White", "30 000–35 000 UZS"],
+          ["Raf (turli xil)", "35 000–45 000 UZS"],
+          ["Mokko", "30 000–35 000 UZS"],
+          ["Issiq shokolad / Kakao", "20 000–35 000 UZS"]
+        ]},
+        { title: "Sovuq ichimliklar", items: [
+          ["Ice Amerikano / Ice Kapuchino / Ice Latte", "25 000–35 000 UZS"],
+          ["Bambl / Frappe / Frapuchino", "30 000–40 000 UZS"],
+          ["Ice Raf / Ice Mokko / Adrenalin", "30 000–50 000 UZS"]
+        ]},
+        { title: "Sutli sheyklar", items: [
+          ["Klassik", "30 000–45 000 UZS"],
+          ["Banan", "30 000–45 000 UZS"],
+          ["Shokolad", "30 000–45 000 UZS"],
+          ["Qulupnay", "30 000–45 000 UZS"],
+          ["Oreo", "30 000–45 000 UZS"],
+          ["Bounty", "30 000–45 000 UZS"],
+          ["Snickers", "30 000–45 000 UZS"]
+        ]},
+        { title: "Mavsumiy menyu", items: [
+          ["Moxito (Okean, Qulupnay, Energy)", "30 000–40 000 UZS"],
+          ["Tarxun, Tropik, Rezavorli, Ice Tea", "25 000–35 000 UZS"],
+          ["Mango-Marakuya", "45 000 UZS"],
+          ["Smuzi", "45 000 UZS"]
+        ]},
+        { title: "Choy va Fresh · 330 / 400 ml", items: [
+          ["Limonli, zanjabilli, irlandcha, rezavorli, chakanda choyi", "5 000–30 000 UZS"],
+          ["Fresh: olma, sabzi, aralash, apelsin", "30 000–50 000 UZS"],
+          ["Qo'shimchalar: sut, qaymoq, sirop, asal, limon, yalpiz", "3 000–10 000 UZS"]
+        ]}
+      ],
+      ru: [
+        { title: "Горячие напитки", items: [
+          ["Эспрессо", "20 000 UZS"],
+          ["Американо · 250 / 330 / 400 мл", "20 000 / 25 000 / 30 000 UZS"],
+          ["Капучино · 250 / 330 / 400 мл", "25 000 / 30 000 / 35 000 UZS"],
+          ["Лаззат / Флэт Уайт", "30 000–35 000 UZS"],
+          ["Раф (разные виды)", "35 000–45 000 UZS"],
+          ["Мокко", "30 000–35 000 UZS"],
+          ["Горячий шоколад / Какао", "20 000–35 000 UZS"]
+        ]},
+        { title: "Холодные напитки", items: [
+          ["Айс Американо / Айс Капучино / Айс Латте", "25 000–35 000 UZS"],
+          ["Бамбл / Фраппе / Фрапучино", "30 000–40 000 UZS"],
+          ["Айс Раф / Айс Мокко / Адреналин", "30 000–50 000 UZS"]
+        ]},
+        { title: "Молочные коктейли", items: [
+          ["Классический", "30 000–45 000 UZS"],
+          ["Банановый", "30 000–45 000 UZS"],
+          ["Шоколадный", "30 000–45 000 UZS"],
+          ["Клубничный", "30 000–45 000 UZS"],
+          ["Орео", "30 000–45 000 UZS"],
+          ["Баунти", "30 000–45 000 UZS"],
+          ["Сникерс", "30 000–45 000 UZS"]
+        ]},
+        { title: "Сезонное меню", items: [
+          ["Мохито (Океан, Клубника, Energy)", "30 000–40 000 UZS"],
+          ["Тархун, Тропический, Ягодный, Ice Tea", "25 000–35 000 UZS"],
+          ["Манго-Маракуйя", "45 000 UZS"],
+          ["Смузи", "45 000 UZS"]
+        ]},
+        { title: "Чай и фреш · 330 / 400 мл", items: [
+          ["Чай: с лимоном, имбирный, по-ирландски, ягодный, облепиховый", "5 000–30 000 UZS"],
+          ["Фреш: яблоко, морковь, микс, апельсин", "30 000–50 000 UZS"],
+          ["Добавки: молоко, сливки, сироп, мёд, лимон, мята", "3 000–10 000 UZS"]
+        ]}
+      ]
+    };
+
+    const copy = {
+      uz: {
+        navMenu: "Menyu", navAbout: "Biz haqimizda", navVisit: "Manzil",
+        heroEyebrow: "Toshkent · Karasuv-20",
+        heroTitle: "Toshkentdagi<br>eng yaxshi <em>qahva</em>",
+        heroCopy: "Har bir finjonda mehr bilan tayyorlangan qahva, iliq muhit va shoshilmasdan yashalgan lahzalar.",
+        heroCta: "Menyuni ko'rish", heroOpen: "Har kuni ochiq",
+        heroNote: "Shaharning o'rtasida, o'zingiz uchun bir lahza",
+        introEyebrow: "Qahva Xona bilan tanishing",
+        introTitle: "Shoshilmang.<br><em>Qahvangiz sizni kutadi.</em>",
+        introCopy: "Qahva Xona — har kuni qaytgingiz keladigan maskan. Yaxshi qahva, samimiy suhbat va o'zingizga ajratilgan sokin vaqt uchun.",
+        menuEyebrow: "Har bir kayfiyat uchun", menuTitle: "Bizning menyu",
+        menuSubtitle: "Yangi tayyorlanadi. Mehr bilan tortiladi.",
+        priceNote: "Barcha narxlar O'zbekiston so'mida (UZS)",
+        visitEyebrow: "Bizni toping",
+        visitTitle: "Sizni kutamiz<br><em>har kuni.</em>",
+        visitCopy: "Qahva uchun keling, yana qaytgingiz keladigan muhit uchun qoling. Do'stlaringizni ham olib keling.",
+        addressLabel: "Manzil", addressValue: "Toshkent, Karasuv-20<br>Mo'ljal: Palace",
+        hoursLabel: "Ish vaqtimiz", hoursValue: "Har kuni<br>08:00 — 01:00",
+        mapButton: "Kartada ochish",
+        copyright: "© 2026 Qahva Xona. Mehr bilan, Toshkentda."
+      },
+      ru: {
+        navMenu: "Меню", navAbout: "О нас", navVisit: "Адрес",
+        heroEyebrow: "Ташкент · Карасу-20",
+        heroTitle: "Лучший кофе<br><em>Ташкента</em>",
+        heroCopy: "Кофе, приготовленный с заботой в каждой чашке, тёплая атмосфера и мгновения, в которых не нужно спешить.",
+        heroCta: "Смотреть меню", heroOpen: "Открыты каждый день",
+        heroNote: "В самом сердце города — мгновение для себя",
+        introEyebrow: "Познакомьтесь с Qahva Xona",
+        introTitle: "Не спешите.<br><em>Ваш кофе уже ждёт.</em>",
+        introCopy: "Qahva Xona — место, куда хочется возвращаться. Для хорошего кофе, душевных разговоров и тихого времени для себя.",
+        menuEyebrow: "Для любого настроения", menuTitle: "Наше меню",
+        menuSubtitle: "Готовим свежим. Подаём с заботой.",
+        priceNote: "Все цены указаны в узбекских сумах (UZS)",
+        visitEyebrow: "Как нас найти",
+        visitTitle: "Ждём вас<br><em>каждый день.</em>",
+        visitCopy: "Загляните на кофе, а останьтесь ради атмосферы, в которую хочется вернуться. Приходите с друзьями.",
+        addressLabel: "Адрес", addressValue: "Ташкент, Карасу-20<br>Ориентир: Palace",
+        hoursLabel: "Время работы", hoursValue: "Ежедневно<br>08:00 — 01:00",
+        mapButton: "Открыть на карте",
+        copyright: "© 2026 Qahva Xona. С теплом, из Ташкента."
+      }
+    };
+
+    const toggle = document.querySelector(".language-toggle");
+    const grid = document.querySelector("#menuGrid");
+    let language = "uz";
+
+    function renderMenu() {
+      grid.innerHTML = menuData[language].map((category, index) => `
+        <article class="menu-card">
+          <div class="menu-card-head">
+            <h3>${category.title}</h3>
+            <span class="category-number">0${index + 1}</span>
+          </div>
+          <ul class="menu-items">
+            ${category.items.map(([name, price]) => `<li><span class="item-name">${name}</span><span class="item-price">${price}</span></li>`).join("")}
+          </ul>
+        </article>
+      `).join("");
+    }
+
+    function setLanguage(nextLanguage) {
+      language = nextLanguage;
+      document.documentElement.lang = language;
+      document.title = language === "uz"
+        ? "Qahva Xona — Toshkentda qahva va sokin lahzalar"
+        : "Qahva Xona — кофе и тихие моменты в Ташкенте";
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        element.textContent = copy[language][element.dataset.i18n];
+      });
+      document.querySelectorAll("[data-i18n-html]").forEach((element) => {
+        element.innerHTML = copy[language][element.dataset.i18nHtml];
+      });
+      toggle.innerHTML = language === "uz" ? `O'zbekcha <span aria-hidden="true">⌄</span>` : `Русский <span aria-hidden="true">⌄</span>`;
+      toggle.setAttribute("aria-label", language === "uz" ? "Переключить язык на русский" : "Tilni o'zbekchaga o'tkazish");
+      toggle.setAttribute("aria-pressed", String(language === "ru"));
+      document.querySelector(".main-nav").setAttribute("aria-label", language === "uz" ? "Asosiy navigatsiya" : "Основная навигация");
+      document.querySelector(".brand").setAttribute("aria-label", language === "uz" ? "Qahva Xona — bosh sahifa" : "Qahva Xona — главная");
+      document.querySelector(".map-frame iframe").title = language === "uz"
+        ? "Qahva Xona — Karasuv-20, Tashkent"
+        : "Qahva Xona — Карасу-20, Ташкент";
+      renderMenu();
+    }
+
+    toggle.addEventListener("click", () => setLanguage(language === "uz" ? "ru" : "uz"));
+    renderMenu();
+  </script>
+</body>
+</html>
